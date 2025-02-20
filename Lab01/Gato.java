@@ -1,4 +1,4 @@
-public class Cachorro  {
+public class Gato  {
     // atributos encapsulados
     private String nome;
     private int nascimento;
@@ -8,9 +8,10 @@ public class Cachorro  {
     private int tamanho; // em centímetros
     private double peso;
     private int energia;
+    private boolean assustado;
     
     //construtor
-    public Cachorro(String nome, int nasc, String raca, String cor, 
+    public Gato(String nome, int nasc, String raca, String cor, 
                    boolean acordado, int tamanho, double peso, int energia) {
         
         this.nome = nome;
@@ -23,7 +24,7 @@ public class Cachorro  {
         this.energia = energia;
     }
     
-    public Cachorro() {
+    public Gato() {
         this.nome = "sem nome";
         this.raca = "não definida";
     }
@@ -37,7 +38,8 @@ public class Cachorro  {
         + "\nRaça = " + this.raca
 		+ "\nNascimento = " + this.nascimento
 		+ "\nEnergia = " + this.energia
-		+ "\nAcordado = " + this.acordado;
+		+ "\nAcordado = " + this.acordado
+        + "\nAssustado = " + this.assustado;
 		
 		return s;
     }
@@ -62,23 +64,27 @@ public class Cachorro  {
     public String getNome() {
         return this.nome;
     }
-
-    public boolean getAcordado() {
-        return this.acordado;
-    }
     
-    public int getTamanho() {
-        return this.tamanho;
-    }
-
-    public double getPeso() {
-        return this.peso;
-    }
-
     public String getCor() {
         return this.cor;
     }
 
+    public boolean getAcordado() {
+        return this.acordado;
+    }
+
+    public int getTamanho() {
+        return this.tamanho;
+    }
+    
+    public double getPeso() {
+        return this.peso;
+    }
+
+    public boolean getAssustado() {
+        return this.assustado;
+    }
+    
     public void acordar() {
         acordado = true;
     }
@@ -91,7 +97,7 @@ public class Cachorro  {
     public void andar() {
         energia -= 1;
     }
-    public void latir() {
-        System.out.println("Au Au!!");
+    public void miar() {
+        System.out.println("Miau");
     }
 }

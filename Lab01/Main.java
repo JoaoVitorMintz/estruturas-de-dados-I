@@ -2,23 +2,32 @@ public class Main
 {
 	public static void main(String[] args) {
 	    
-	    Cachorro meuPet = new Cachorro("Totó", 2025, "Labrador", "chocolate", true, 15, 0.5, 5);
-		Cachorro meuPet2 = new Cachorro();
-	    Cachorro meuPet3 = new Cachorro("Lulu", 2024, "Pit", "branca", true, 20, 0.8, 5);
+	    Cachorro meuDog = new Cachorro("Totó", 2025, "Labrador", "chocolate", true, 15, 0.5, 5);
+		Gato meuGato = new Gato("Mimi", 2025, "Siamês", "Laranja", true, 10, 0.4, 5);
 	    
-		System.out.println(meuPet);
+		System.out.println(meuDog);
 		System.out.println("------------------");
-		/*
-		System.out.println("Dados do meuPet:\n");
-		System.out.println("Nome = " + meuPet.nome);
-		System.out.println("Raça = " + meuPet.raca);
-		System.out.println("Nascimento = " + meuPet.nascimento);
-		System.out.println("Energia = " + meuPet.energia);
-		System.out.println("Acordado = " + meuPet.acordado); 
-		*/
-		meuPet.setEnergia(-10);
+		System.out.println(meuGato);
 		
-		System.out.println("Energia = " + meuPet.getEnergia());
+		System.out.println("Dados dos meus Pets:\n\n");
+		System.out.println("Nome = " + meuDog.getNome);
+		System.out.println("Raça = " + meuDog.getRaca);
+		System.out.println("Nascimento = " + meuDog.getNascimento);
+		System.out.println("Energia = " + meuDog.getEnergia);
+		System.out.println("Acordado = " + meuDog.getAcordado); 
+
+		System.out.println("Nome = " + meuGato.getNome);
+		System.out.println("Raça = " + meuGato.getRaca);
+		System.out.println("Nascimento = " + meuGato.getNascimento);
+		System.out.println("Energia = " + meuGato.getEnergia);
+		System.out.println("Acordado = " + meuGato.getAcordado); 
+		System.out.println("Assustado = " + meuGato.getAssustado);
+		
+		meuDog.setEnergia(-10);
+		System.out.println("Energia do cachorro = " + meuDog.getEnergia());
+
+		meuGato.setEnergia(50);
+		System.out.println("Energia do Gato = " + meuGato.getEnergia());
 		
 		
 		
