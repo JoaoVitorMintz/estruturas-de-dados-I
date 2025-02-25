@@ -1,31 +1,14 @@
-public class Cachorro  {
-    // atributos encapsulados
-    private String nome;
-    private int nascimento;
-    private String raca;
-    private String cor;
-    private boolean acordado;
-    private int tamanho; // em centímetros
-    private double peso;
-    private int energia;
+public class Cachorro extends Animal {
     
     //construtor
-    public Cachorro(String nome, int nasc, String raca, String cor, 
-                   boolean acordado, int tamanho, double peso, int energia) {
-        
-        this.nome = nome;
-        this.nascimento = nasc;
-        this.raca = raca;
-        this.cor = cor;
-        this.acordado = acordado;
-        this.tamanho = tamanho;
-        this.peso = peso;
-        this.energia = energia;
+    public Animal(String nome, int nasc, String raca, String cor, boolean acordado, int tamanho, double peso, int energia) {
+
+        super(nome, nasc, raca, cor, acordado, tamanho, peso, energia);
+
     }
-    
+
     public Cachorro() {
-        this.nome = "sem nome";
-        this.raca = "não definida";
+
     }
     
     //métodos

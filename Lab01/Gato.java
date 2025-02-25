@@ -1,15 +1,5 @@
-public class Gato  {
-    // atributos encapsulados
-    private String nome;
-    private int nascimento;
-    private String raca;
-    private String cor;
-    private boolean acordado;
-    private int tamanho; // em centímetros
-    private double peso;
-    private int energia;
-    private boolean assustado;
-    
+public class Gato extends Animal {
+
     //construtor
     public Gato(String nome, int nasc, String raca, String cor, 
                    boolean acordado, int tamanho, double peso, int energia) {
