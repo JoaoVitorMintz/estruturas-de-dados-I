@@ -1,5 +1,5 @@
 # estruturas-de-dados-I
-Atividades da matéria de Estrutura de Dados I
+Atividades da matéria de Estrutura de Dados I, sendo ela dos laboratórios ou de sala de aula. Inicialmente estudamos as preculiaridades de JAVA, por ter uma sintaxe semelhante com C. Posteriormente estudamos Estruturas de Dados em si com o apoio da linguagem JAVA.
 
 ## Atividade 01 
 
