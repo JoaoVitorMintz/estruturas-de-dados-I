@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class exercicio07 {
+public class exercicio7 {
 
     static int contarVogais(String a) {
         char vetor[] = a.toCharArray();
