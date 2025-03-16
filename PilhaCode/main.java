@@ -4,7 +4,6 @@ public class main {
 
     public static void main(String[] args) {
         pilha minhaPilha = new pilha(20);
-        pilha minhaPilha2 = new pilha(20);
 
         int opcao;
         Scanner sc = new Scanner(System.in);
