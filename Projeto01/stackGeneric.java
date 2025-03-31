@@ -6,7 +6,7 @@ public class stackGeneric<T> {
 
     // Método construtor da classe que recebe o tamanho que define o tamanho do Array.
     public stackGeneric(int tam) {
-        topo = -1;
+        topo = 0;
         p = (T[])new Object[tam];
     }
     
@@ -17,24 +17,21 @@ public class stackGeneric<T> {
             return false;
         }
 
-        topo++;
-        p[topo] = value;
+        p[topo++] = value;
 
         return true;
     }
 
     // Retorna o item no topo da pilha e, em seguida, o remove.
-    public stackGenericResult<T> pop() {
+    public T pop() {
         if (isEmpty()) {
-            return new stackGenericResult<T>(false, null);
+            return null;
         }
-
-
-        T topoPilha = p[topo];
+        
+        T topoPilha = p[--topo];
         p[topo] = null;
-        topo--;
-
-        return new stackGenericResult<T>(true, topoPilha);
+        
+        return topoPilha;
     }
 
 
@@ -58,6 +55,29 @@ public class stackGeneric<T> {
         while (!isEmpty()) {
             pop();
         }
+    }
+
+    // Retorna o valor da base da pilha:
+    public T base() {
+        return p[0];
+    }
+
+    // Verifica qual o topo da pilha, porém, sem removê-lo:
+    public T top() {
+        if (isEmpty()) {
+            return null; // Retorna null diretamente, evitando o uso de stackGenericResult
+        }
+        return p[topo - 1];
+    }
+
+    // Verifica se há um valor em específico na pilha:
+    public boolean inStack(T character) {
+        for(int c = 0; c <= topo; c++) { 
+            if(p[c] == character) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
