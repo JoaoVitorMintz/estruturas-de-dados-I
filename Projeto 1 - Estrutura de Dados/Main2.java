@@ -7,62 +7,68 @@
 
  import java.util.Scanner;
 
- public class teste2 {
+ 
+ public class Main2 {
      private static stackGeneric<Character> s = new stackGeneric<>(50);
      private static stackGeneric<Float> s2 = new stackGeneric<>(50);
  
      public static void main(String args[]) {
-         Scanner sc = new Scanner(System.in);
-         String data;
-         char[] vars = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-         double[] varValue = new double[26];
+         Scanner scanner = new Scanner(System.in);
+         String entrada;
+         char[] variaveis = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+         double[] valoresVariaveis = new double[26];
          System.out.println("Calculadora Infixa:");
  
          do {
              System.out.print("\n>>> ");
-             data = sc.nextLine().trim().toUpperCase();
+             entrada = scanner.nextLine().trim().toUpperCase();
  
-             if(data.equalsIgnoreCase("EXIT")) {
+             if(entrada.equalsIgnoreCase("EXIT")) {
                  break;
              }
  
-             if(data.equalsIgnoreCase("VARS")) {
-                 boolean hasVars = false;
-                 for(int i = 0; i < vars.length; i++) {
-                     if(varValue[i] != 0) {
-                         System.out.println(vars[i] + " = " + varValue[i]);
-                         hasVars = true;
+             // Comando para listar todas as variáveis definidas
+             if(entrada.equalsIgnoreCase("VARS")) {
+                 boolean temVariaveis = false;
+                 for(int i = 0; i < variaveis.length; i++) {
+                     if(valoresVariaveis[i] != 0) {
+                         System.out.println(variaveis[i] + " = " + valoresVariaveis[i]);
+                         temVariaveis = true;
                      }
                  }
-                 if(!hasVars) {
+                 if(!temVariaveis) {
                      System.out.println("Nenhuma variável definida.");
                  }
                  continue;
              }
  
-             if(data.equalsIgnoreCase("RESET")) {
-                 for(int i = 0; i < varValue.length; i++) {
-                     varValue[i] = 0;
+             // Comando para resetar todas as variáveis
+             if(entrada.equalsIgnoreCase("RESET")) {
+                 for(int i = 0; i < valoresVariaveis.length; i++) {
+                     valoresVariaveis[i] = 0;
                  }
                  System.out.println("Variáveis reiniciadas.");
                  continue;
              }
  
-             if(data.contains("=")) {
-                 verificarVariavel(vars, varValue, data);
+             // Verifica se é uma atribuição de variável (ex: A=5)
+             if(entrada.contains("=")) {
+                 processarAtribuicaoVariavel(variaveis, valoresVariaveis, entrada);
                  continue;
              }
  
-             if((!data.contains("(") && data.contains(")")) || (data.contains("(") && !data.contains(")"))) {
+             // Verifica parênteses desbalanceados
+             if((!entrada.contains("(") && entrada.contains(")")) || (entrada.contains("(") && !entrada.contains(")"))) {
                  System.out.println("Erro: expressão inválida.");
                  continue;
              }
  
-             if(data.contains("+") || data.contains("-") || data.contains("*") || data.contains("/") || data.contains("(") || data.contains(")")) {
+             // Processa expressões matemáticas
+             if(entrada.matches(".*[+\\-*/()].*")) {
                  try {
-                     String posfixa = exprePosfixa(data);
+                     String posfixa = exprePosfixa(entrada);
                      System.out.println("\n~Expressao pós-fixa:\n-> " + posfixa);
-                     System.out.println("~Cálculo da expressao pos-fixa: " + calculoPosfixa(posfixa, vars, varValue));
+                     System.out.println("~Cálculo da expressao pos-fixa: " + calcularPosfixa(posfixa, variaveis, valoresVariaveis));
                  } catch (Exception e) {
                      System.out.println("Erro ao processar expressão: " + e.getMessage());
                  }
@@ -70,10 +76,11 @@
  
          } while(true);
  
-         sc.close();
+         scanner.close();
          System.out.println("\nPROGRAMA FINALIZADO!");
      }
  
+     // Converte expressão infixa para posfixa (notação polonesa reversa)
      static String exprePosfixa(String expres) {
         // Criando variáveis auxiliares para manejo da string:
          char[] auxAfixo = expres.toCharArray();
@@ -129,67 +136,80 @@
          return 0;
      }
  
-     static float calculoPosfixa(String expresPosfixa, char[] vars, double[] varValue) {
-         String[] tokens = expresPosfixa.split("\\s+");
+     // Calcula o valor de uma expressão na notação posfixa
+     static float calcularPosfixa(String expressaoPosfixa, char[] variaveis, double[] valoresVariaveis) {
+         String[] tokens = expressaoPosfixa.split("\\s+");
  
          for (String token : tokens) {
-             if (token.isEmpty()) continue;
+             if (token.isEmpty()) continue; //Checa se a pilha está vazia
  
-             if (token.matches("\\d+")) {
+             if (token.matches("\\d+")) {  // Se for número
                  s2.push(Float.parseFloat(token));
              }
-             else if (token.matches("[A-Z]")) {
-                 char var = token.charAt(0);
-                 float value = 0;
-                 for(int i = 0; i < vars.length; i++) {
-                     if(vars[i] == var) {
-                         value = (float)varValue[i];
+             else if (token.matches("[A-Z]")) {  // Se for variável
+                 char variavel = token.charAt(0);
+                 float valor = 0;
+                 for(int i = 0; i < variaveis.length; i++) {
+                     if(variaveis[i] == variavel) {
+                         valor = (float)valoresVariaveis[i];
                          break;
                      }
                  }
-                 s2.push(value);
+                 s2.push(valor);
              }
+             //checa se o índice é soma
              else if (token.equals("+")) {
-                 s2.push(s2.pop() + s2.pop());
+                 s2.push(s2.pop() + s2.pop()); //Coloca na pilha o resultado do valor da soma
              }
+             
+             //checa se o índice é subtracao
              else if (token.equals("-")) {
                  float subtraendo = s2.pop();
-                 s2.push(s2.pop() - subtraendo);
+                 s2.push(s2.pop() - subtraendo); //Coloca na pilha o resultado do valor da subtracap
              }
+             
+             //checa se o índice é multiplicacao
              else if (token.equals("*")) {
-                 s2.push(s2.pop() * s2.pop());
+                 s2.push(s2.pop() * s2.pop()); //Coloca na pilha o resultado do valor da multiplicacao
              }
+             
+             //checa se o índice é divisao
              else if (token.equals("/")) {
                  float divisor = s2.pop();
-                 s2.push(s2.pop() / divisor);
+                 s2.push(s2.pop() / divisor); //Coloca na pilha o resultado do valor da divisao
              }
          }
-         return s.pop();
+         
+         return s2.pop(); //tira o resultado da fila para imprimir o valor
      }
  
-     static void verificarVariavel(char[] var, double[] value, String resp) {
-         String[] partes = resp.split("=");
-         if(partes.length != 2) {
+     // Processa a atribuição de valor a uma variável (ex: A=5)
+     static void processarAtribuicaoVariavel(char[] variaveis, double[] valoresVariaveis, String entrada) {
+         String[] partes = entrada.split("="); // Divide a string no sinal de igual
+         if(partes.length != 2) { // Verifica se a entrada tem exatamente duas partes (variável e valor)
              System.out.println("Formato inválido. Use: VARIAVEL=VALOR");
              return;
          }
- 
-         String letra = partes[0].trim().toUpperCase();
+  // Obtém e formata o nome da variável (remove espaços e converte para maiúsculo)
+         String nomeVariavel = partes[0].trim().toUpperCase();
          String valorStr = partes[1].trim();
  
-         if(letra.length() != 1 || !Character.isLetter(letra.charAt(0))) {
+    // Valida se o nome da variável tem exatamente 1 caractere e é uma letra
+         if(nomeVariavel.length() != 1 || !Character.isLetter(nomeVariavel.charAt(0))) {
              System.out.println("Nome de variável inválido. Deve ser uma única letra de A-Z");
              return;
          }
  
          try {
+            // Tenta converter o valor para double
              double valor = Double.parseDouble(valorStr);
              boolean encontrou = false;
  
-             for(int c = 0; c < var.length; c++) {
-                 if(letra.equals(String.valueOf(var[c]))) {
-                     value[c] = valor;
-                     System.out.println("Variável " + var[c] + " definida como " + valor);
+             // Percorre o array de variáveis para encontrar a correspondente
+             for(int i = 0; i < variaveis.length; i++) {
+                 if(nomeVariavel.equals(String.valueOf(variaveis[i]))) {
+                     valoresVariaveis[i] = valor;
+                     System.out.println("Variável " + variaveis[i] + " definida como " + valor);
                      encontrou = true;
                      break;
                  }
@@ -203,11 +223,12 @@
          }
      }
  }
- /*
+  /*
     ~Referências:
       .split: https://codegym.cc/pt/groups/posts/pt.512.metodo-java-string-split-
       método character: https://www.devmedia.com.br/metodos-da-classe-character-string-em-java-parte-3/21811
       Java string: https://www.ionos.com/pt-br/digitalguide/sites-de-internet/desenvolvimento-web/java-strings/
       Java Regex:  https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html
       Stack Overflow - Generic Array: https://stackoverflow.com/questions/529085/how-to-create-a-generic-array-in-java
+      //d+: https://www.codementor.io/@nehavaidya/java-regex-tutorial-regular-expressions-in-java-x5d8cx3xt
    */
