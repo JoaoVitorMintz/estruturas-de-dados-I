@@ -56,6 +56,7 @@ public class Main
 				}
 			} while(opcao != 5);
 			System.out.print("\nPrograma finalizado...\n");
+			sc.close();
 		}
 	}
 

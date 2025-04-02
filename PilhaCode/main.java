@@ -45,6 +45,7 @@ public class main {
         } while(opcao != 5);
 
         System.out.println("\nPrograma finalizado...");
+        sc.close();
     }
     
 }
