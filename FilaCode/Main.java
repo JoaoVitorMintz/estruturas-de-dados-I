@@ -18,7 +18,8 @@ public class Main
 	        System.out.println("2 - remover");
 	        System.out.println("3 - exibir início");
 	        System.out.println("4 - reiniciar");
-	        System.out.println("5 - sair");
+			System.out.println("5 - exibir elementos");
+	        System.out.println("6 - sair");
 	        System.out.print("\nDigite uma opçao válida: ");
 	        opcao = sc.nextInt(); // input do java para inteiros
 	        
@@ -53,8 +54,11 @@ public class Main
 					minhaFila.reiniciar();
 					System.out.println("\nFila reiniciada!\n");
 					break;
+				case 5:
+					minhaFila.exibirElementos();
+					break;
 				}
-			} while(opcao != 5);
+			} while(opcao != 6);
 			System.out.print("\nPrograma finalizado...\n");
 			sc.close();
 		}

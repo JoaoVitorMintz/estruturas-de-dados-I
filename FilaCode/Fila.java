@@ -9,8 +9,29 @@ class Fila {
     int qtdElementos;
     int inicio;
     int fim;
+
+    // this. é usado para se referenciar ao objeto atributo do construtor, porém, this() pode ser usado dentro de um outro construtor
+    //para se referência a um construtor feito anteriormente:
+    /*
+    EXEMPLO:
+    public class Pessoa {
+    private String nome;
+    private int idade;
     
-    // construtor
+    // Construtor principal
+    public Pessoa(String nome, int idade) {
+        this.nome = nome;
+        this.idade = idade;
+    }
+    
+    // Construtor secundário que chama o principal usando this()
+    public Pessoa(String nome) {
+        this(nome, 0); // Chama o construtor Pessoa(String nome, int idade)
+        }
+    }
+    */
+    
+    // Construtor:
     public Fila(int tamanho) {
         f = new int[tamanho]; 
         inicio = 0;
@@ -18,13 +39,17 @@ class Fila {
         qtdElementos = 0;
     }
     
+    // Métodos:
     public boolean inserir(int valor) {
-        if(filaCheia())
+        if(filaCheia()) {
             return false;
-        this.fim = (this.fim + 1) % f.length;
-        f[this.fim] = valor;
-        qtdElementos++;
-        return true;
+        } else {
+            this.fim = (this.fim + 1) % f.length; // Esse this se refere ao objeto/atributo do construtor fim e, nesse caso, é desnecessário.
+            f[this.fim] = valor;
+            qtdElementos++;
+            return true;
+        }
+
     }
     
     public int remover() {
@@ -33,8 +58,8 @@ class Fila {
         if(filaVazia()){
             return -1;
         } else {
-            valor = f[inicio];
-            inicio = ((inicio + 1) % f.length);
+            valor = f[this.inicio];
+            this.inicio = ((this.inicio + 1) % f.length);// Esse this é inútil, seria necessário caso tivesse mais de uma variável de mesmo nome local.
             qtdElementos--;
             return valor;
         }
@@ -56,9 +81,11 @@ class Fila {
         }
     }
     int mostrarInicio() {
-        if(!filaVazia()) 
+        if(!filaVazia()) {
             return f[inicio];
-        return -1; // código de erro. Indica fila vazia.
+        } else {
+            return -1; // código de erro. Indica fila vazia.
+        }
     }
 
     public void exibirElementos() {
