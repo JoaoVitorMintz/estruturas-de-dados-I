@@ -32,6 +32,6 @@ public class Node<T> {
 	
 	@Override
 	public String toString() {
-		return "data: " + data + "next: " + (next!=null?next.getData():"null"); 
+		return "data: " + data + " next: " + (next!=null?next.getData():"null"); 
 	}
 }
