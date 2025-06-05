@@ -18,13 +18,13 @@ package apl2;
 // comportamento descrito em cada operação.
 
 public class DLinkedList {
-	
-	// TODO: Implementar a classe conforme o enunciado da atividade Apl2.
+
+	// Implementar a classe conforme o enunciado da atividade Apl2.
 	private Node head;
 	private Node tail;
 	private int count;
 
-// OPERAÇÃO:		Método construtor
+	// OPERAÇÃO:		Método construtor
 // COMPORTAMENTO:	Cria uma lista vazia.
 	public DLinkedList() {
 		head = null;
@@ -33,7 +33,7 @@ public class DLinkedList {
 	}
 
 
-// OPERAÇÃO:		insert(<dados da pessoa>)
+	// OPERAÇÃO:		insert(<dados da pessoa>)
 // COMPORTAMENTO:	Aloca um Node que contém os <dados da pessoa> e insere o
 //					novo nó no início da lista.
 	public void insert(String ID, String nome, float nota) {
@@ -47,7 +47,7 @@ public class DLinkedList {
 	}
 
 
-// OPERAÇÃO:		append(<dados da pessoa>)
+	// OPERAÇÃO:		append(<dados da pessoa>)
 // COMPORTAMENTO:	Aloca um Node que contém os <dados da pessoa> e insere o
 //					novo nó no final da lista.
 	public void append(String ID, String nome, float nota) {
@@ -56,14 +56,14 @@ public class DLinkedList {
 			return;
 		}
 
-		Node node = new Node(ID, nome, nota, tail, null);
+		Node node = new Node(ID, nome, nota, null, tail);
 		tail.setNext(node);
 		tail = node;
 		++count;
 	}
 
 
-// OPERAÇÃO: 		removeHead()
+	// OPERAÇÃO: 		removeHead()
 // COMPORTAMENTO:	Remove o nó do início da lista e retorna a referência do
 //					nó removido.
 //					Ou retorna null caso a lista esteja vazia.
@@ -85,7 +85,7 @@ public class DLinkedList {
 	}
 
 
-// OPERAÇÃO:		removeTail()
+	// OPERAÇÃO:		removeTail()
 // COMPORTAMENTO:	Remove o nó do final da lista e retorna a referência do
 //					nó removido.
 //					Ou retorna null caso a lista esteja vazia.
@@ -95,7 +95,7 @@ public class DLinkedList {
 		}
 
 		Node removed = tail;
-		
+
 		if (head == tail) {
 			head = null;
 			tail = null;
@@ -109,7 +109,7 @@ public class DLinkedList {
 	}
 
 
-// OPERAÇÃO:		removeNode(<ID da pessoa>)
+	// OPERAÇÃO:		removeNode(<ID da pessoa>)
 // COMPORTAMENTO:	Remove o nó que contém o <ID da pessoa> da lista e retorna
 //					a referência do nó removido.
 //					Ou retorna null caso não exista um nó com <ID da pessoa>.
@@ -138,7 +138,7 @@ public class DLinkedList {
 	}
 
 
-// OPERAÇÃO:		getHead()
+	// OPERAÇÃO:		getHead()
 // COMPORTAMENTO:	Retorna uma referência para o nó do início da lista.
 //					Ou retorna null caso a lista esteja vazia.
 	public Node getHead() {
@@ -146,7 +146,7 @@ public class DLinkedList {
 	}
 
 
-// OPERAÇÃO:		getTail()
+	// OPERAÇÃO:		getTail()
 // COMPORTAMENTO:	Retorna uma referência para o nó do final da lista.
 //					Ou retorna null caso a lista esteja vazia.
 	public Node getTail() {
@@ -154,14 +154,14 @@ public class DLinkedList {
 	}
 
 
-// OPERAÇÃO:		getNode(<ID da pessoa>)
+	// OPERAÇÃO:		getNode(<ID da pessoa>)
 // COMPORTAMENTO:	Retorna uma referência para o nó que contém o <ID da pessoa>
 //					da lista.
 //					Ou retorna null caso não exista um nó com <ID da pessoa>.
 	public Node getNode(String id) {
 		Node node = head;
 		while (node != null) {
-			if (node.getID() == id) {
+			if (node.getID().equals(id)) {
 				return node;
 			}
 			node = node.getNext();
@@ -170,21 +170,21 @@ public class DLinkedList {
 	}
 
 
-// OPERAÇÃO:		count()
+	// OPERAÇÃO:		count()
 // COMPORTAMENTO:	Retorna a quantidade de nós da lista.
 	public int count() {
 		return count;
 	}
 
 
-// OPERAÇÃO:		isEmpty()
+	// OPERAÇÃO:		isEmpty()
 // COMPORTAMENTO:	Retorna true se a lista estiver vazia ou false, caso contrário.
 	public boolean isEmpty() {
 		return head == null;
 	}
 
 
-// OPERAÇÃO:		clear()
+	// OPERAÇÃO:		clear()
 // COMPORTAMENTO:	Esvazia a lista, liberando a memória de todos os nós da lista.
 	public void clear() {
 		while (!isEmpty()) {
@@ -193,28 +193,28 @@ public class DLinkedList {
 	}
 
 
-// OPERAÇÃO:		toString()
+	// OPERAÇÃO:		toString()
 // COMPORTAMENTO:	Retorna uma string com o conteúdo da lista (caso queira, use o
 //					exemplo do método toString() da classe LinkedListOriginal).
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("(" + count + ")  \n");
-
-		Node node = head;
-		while (node != null) {
-			sb.append("25.S" + count % 2 + "-") // Adicionar um random? (perguntar pro prof se pode...) e perguntar se coloca time para ver o ano...
-			.append(node.getID())
-			.append(";")
-			.append(node.getNome())
-			.append(";")
-			.append(node.getNota());
-			node = node.getNext();
+		if (isEmpty()) {
+			return "0";
 		}
-		sb.append("null.");
+
+		StringBuilder sb = new StringBuilder();
+		Node node = head;
+
+		while (node != null) {
+			sb.append(node.getPrev() == null ? "null" : node.getPrev().getID()) // Usa o toString() da classe Node
+	          .append(" <- ")
+	          .append(node.toString())
+	          .append(" -> ")
+	          .append(node.getNext() == null ? "null" : node.getNext().getID())
+	          .append("\n");
+	        node = node.getNext();
+		}
 
 		return sb.toString();
 	}
-
 }
